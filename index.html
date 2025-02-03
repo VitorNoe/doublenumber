@@ -1,63 +1,37 @@
 <!DOCTYPE html>
-<link rel="stylesheet" href="styles.css?v=2">
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dobro do Número</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            text-align: center;
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 300px;
-        }
-        h1 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-        input {
-            width: 80%;
-            padding: 10px;
-            margin-bottom: 15px;
-            font-size: 1rem;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .result {
-            margin-top: 15px;
-            font-size: 1.2rem;
-        }
-    </style>
+    <title>Calculadora de Dobro</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>Digite um número</h1>
-        <input type="number" id="numberInput" placeholder="Insira um número" />
-        <button onclick="calcularDobro()">Calcular Dobro</button>
-        <div class="result" id="result"></div>
+        <div class="title-box">
+            <h1 class="animate__animated animate__fadeInDown">Calculadora de Dobro</h1>
+            <div class="decorative-line"></div>
+        </div>
+        
+        <div class="input-group">
+            <input type="number" id="numberInput" class="input-field" placeholder=" " />
+            <label for="numberInput" class="input-label">Digite um número</label>
+            <div class="input-border"></div>
+        </div>
+
+        <button class="glow-button" id="calculateButton">
+            <span class="btn-text">Calcular Dobro</span>
+            <div class="hover-effect"></div>
+        </button>
+
+        <div class="result-container" id="result">
+            <div class="result-content"></div>
+        </div>
     </div>
+
+    <div class="background-effects"></div>
+
     <script src="script.js"></script>
 </body>
 </html>
