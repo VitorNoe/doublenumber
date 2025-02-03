@@ -1,68 +1,103 @@
-/* Animação de pressionar botão */
-@keyframes buttonPress {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.95); }
-    100% { transform: scale(1); }
+:root {
+    --primary-color: #6C5CE7;
+    --secondary-color: #A8A4FF;
+    --accent-color: #4CAF50;
+    --background-gradient: linear-gradient(135deg, #2d3436 0%, #483D8B 100%);
+    --text-color: #ffffff;
+    --shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
-.button-press {
-    animation: buttonPress 0.2s ease-in-out;
-}
-
-/* Campo de entrada com suporte a decimal */
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}
-
-/* Fluxo de cálculo animado */
-.calculation-flow {
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    background: var(--background-gradient);
     display: flex;
-    gap: 0.8rem;
     justify-content: center;
     align-items: center;
-    margin: 1rem 0;
+    position: relative;
+    overflow: hidden;
 }
 
-.number-box {
-    padding: 0.5rem 1rem;
-    background: rgba(255,255,255,0.1);
-    border-radius: 8px;
-    min-width: 60px;
-    animation: popIn 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    width: 400px;
+    position: relative;
+    z-index: 2;
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease;
 }
 
-.operator {
-    font-size: 1.5rem;
-    color: #4CAF50;
-    animation: fadeInUp 0.4s ease;
+/* ... (mantenha todo o CSS anterior) ... */
+
+/* Confetti */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    animation: confettiFall 3s linear forwards;
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
 }
 
-.number-box.result {
-    background: linear-gradient(45deg, #4CAF50, #45a049);
-    color: white;
-    font-weight: bold;
-}
-
-@keyframes popIn {
-    0% {
-        transform: scale(0);
-        opacity: 0;
-    }
-    90% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
+@keyframes confettiFall {
+    0% { 
+        transform: translateY(-100vh) rotate(0deg);
         opacity: 1;
     }
+    100% { 
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
+/* Ripple Effect */
+.ripple-effect {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    from { 
+        transform: scale(0); 
+        opacity: 1; 
     }
-    to {
+    to { 
+        transform: scale(2); 
+        opacity: 0; 
+    }
+}
+
+/* Adicione estas regras se ainda não existirem */
+.input-error {
+    animation: inputError 0.4s ease;
+    box-shadow: 0 0 15px rgba(255, 68, 68, 0.4) !important;
+}
+
+@keyframes inputError {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.result.show {
+    animation: resultAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes resultAppear {
+    from { 
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to { 
         opacity: 1;
         transform: translateY(0);
     }
