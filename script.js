@@ -1,59 +1,61 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Configurar eventos
+    const input = document.getElementById('numberInput');
+    const button = document.getElementById('calculateButton');
+    
     // Evento de Enter
-    document.getElementById('numberInput').addEventListener('keypress', (e) => {
+    input.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') calcularDobro();
     });
 
     // Evento de clique no botão
-    document.querySelector('.glow-button').addEventListener('click', calcularDobro);
+    button.addEventListener('click', calcularDobro);
 });
 
 function calcularDobro() {
     const input = document.getElementById('numberInput');
-    const resultDiv = document.getElementById('result');
-    const btn = document.querySelector('.glow-button');
-    
+    const resultContent = document.querySelector('.result-content');
+    const resultContainer = document.getElementById('result');
+    const button = document.getElementById('calculateButton');
+
     // Resetar estados
-    resultDiv.classList.remove('show');
+    resultContainer.classList.remove('show');
     input.classList.remove('input-error');
+    button.classList.remove('button-error');
 
     // Animação do botão
-    btn.classList.add('button-press');
-    setTimeout(() => btn.classList.remove('button-press'), 200);
+    button.classList.add('button-press');
+    setTimeout(() => button.classList.remove('button-press'), 200);
 
-    // Processar valor
+    // Converter e validar número
     const value = input.value.replace(/,/g, '.');
     const number = parseFloat(value);
 
-    // Validação
     if (isNaN(number)) {
-        resultDiv.innerHTML = `<div class="error-animation">⚠️ Valor inválido!</div>`;
+        resultContent.textContent = "⚠️ Digite um número válido!";
+        resultContainer.classList.add('show');
         input.classList.add('input-error');
-        resultDiv.classList.add('show');
+        button.classList.add('button-error');
         return;
     }
 
-    // Cálculo
+    // Calcular e mostrar resultado
     const dobro = number * 2;
-    
-    // Exibir resultado
-    resultDiv.innerHTML = `
-        <div class="result-animation">
-            <div class="calculation-flow">
-                <span class="number-box">${number}</span>
-                <span class="operator">×</span>
-                <span class="number-box">2</span>
-                <span class="operator">=</span>
-                <span class="number-box result">${dobro}</span>
-            </div>
+    resultContent.innerHTML = `
+        <div class="calculation-flow">
+            <span class="number-box animate__animated animate__bounceIn">${number}</span>
+            <span class="operator animate__animated animate__fadeIn">×</span>
+            <span class="number-box animate__animated animate__bounceIn">2</span>
+            <span class="operator animate__animated animate__fadeIn">=</span>
+            <span class="number-box result animate__animated animate__rubberBand">${dobro}</span>
         </div>
     `;
 
-    // Efeitos
-    resultDiv.classList.add('show');
+    // Ativar animações
+    resultContainer.classList.add('show');
     createRippleEffect();
     createConfetti();
-    
+
     // Resetar campo
     input.value = '';
     input.focus();
@@ -63,7 +65,7 @@ function createConfetti() {
     const colors = ['#4CAF50', '#6C5CE7', '#FFD700', '#FF4081'];
     const container = document.querySelector('.background-effects');
     
-    // Limpar confetti anterior
+    // Limpar confetti antigo
     container.querySelectorAll('.confetti').forEach(c => c.remove());
 
     for(let i = 0; i < 20; i++) {
@@ -83,7 +85,7 @@ function createConfetti() {
 }
 
 function createRippleEffect() {
-    const button = document.querySelector('.glow-button');
+    const button = document.getElementById('calculateButton');
     const ripple = document.createElement('div');
     ripple.className = 'ripple-effect';
     button.appendChild(ripple);
