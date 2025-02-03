@@ -3,35 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Dobro</title>
+    <title>Super Calculadora de Dobro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
-    <div class="container">
-        <div class="title-box">
-            <h1 class="animate__animated animate__fadeInDown">Calculadora de Dobro</h1>
-            <div class="decorative-line"></div>
-        </div>
-        
-        <div class="input-group">
-            <input type="number" id="numberInput" class="input-field" placeholder=" " />
-            <label for="numberInput" class="input-label">Digite um número</label>
-            <div class="input-border"></div>
+    <div class="nebula-background"></div>
+    
+    <div class="cyber-container">
+        <div class="holographic-header">
+            <i class="fas fa-calculator icon-glow"></i>
+            <h1>Dobro<span class="cyber-text">X2</span></h1>
+            <div class="neon-line"></div>
         </div>
 
-        <button class="glow-button" id="calculateButton">
-            <span class="btn-text">Calcular Dobro</span>
-            <div class="hover-effect"></div>
+        <div class="cyber-input-group">
+            <div class="input-wrapper">
+                <i class="fas fa-hashtag input-icon"></i>
+                <input type="number" id="cyberInput" class="cyber-input" placeholder=" ">
+                <label class="cyber-label">Insira o Número</label>
+                <div class="input-highlight"></div>
+            </div>
+        </div>
+
+        <button class="cyber-button" id="cyberButton">
+            <span class="cyber-text">Calcular</span>
+            <i class="fas fa-bolt button-icon"></i>
+            <div class="button-lines"></div>
+            <div class="button-shine"></div>
         </button>
 
-        <div class="result-container" id="result">
-            <div class="result-content"></div>
+        <div class="cyber-result" id="cyberResult">
+            <div class="result-wrapper">
+                <i class="fas fa-magic result-icon"></i>
+                <div class="result-text">
+                    <span class="original-number">0</span>
+                    <i class="fas fa-times"></i>
+                    <span class="multiplier">2</span>
+                    <i class="fas fa-equals"></i>
+                    <span class="result-number">0</span>
+                </div>
+            </div>
+            <div class="result-glow"></div>
         </div>
+
+        <div class="cyber-grid"></div>
     </div>
 
-    <div class="background-effects"></div>
-
+    <div class="particle-overlay"></div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
