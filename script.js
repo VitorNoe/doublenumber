@@ -1,11 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Espera carregar fontes e recursos
     document.fonts.ready.then(() => {
+        // Ativa animação de entrada
         const container = document.querySelector('.cyber-container');
-        container.style.visibility = 'visible';
+        container.classList.remove('pre-load');
         container.classList.add('loaded');
-        initializeAnimations();
-        setupEventListeners();
-        createFloatingParticles();
+
+        // Configura eventos após animação inicial
+        setTimeout(() => {
+            setupEventListeners();
+            createFloatingParticles();
+        }, 1000);
     });
 });
 
@@ -20,12 +25,7 @@ function setupEventListeners() {
     button.addEventListener('click', calcularDobro);
 }
 
-function calcularDobro() {
-    const input = document.getElementById('cyberInput');
-    const resultElement = document.getElementById('cyberResult');
-    const originalNumber = document.querySelector('.original-number');
-    const resultNumber = document.querySelector('.result-number');
-
+    // Animação do botão
     anime({
         targets: '#cyberButton',
         scale: [1, 0.95, 1],
@@ -33,16 +33,20 @@ function calcularDobro() {
         easing: 'easeInOutQuad'
     });
 
+    // Processar valor
     const value = input.value.replace(/,/g, '.');
     const number = parseFloat(value);
 
+    // Validação
     if (isNaN(number)) {
         showErrorAnimation();
         return;
     }
 
+    // Cálculo
     const dobro = number * 2;
     
+    // Animação do resultado
     anime({
         targets: resultElement,
         opacity: [0, 1],
@@ -54,9 +58,10 @@ function calcularDobro() {
         }
     });
 
+    // Animação dos números
     anime({
-        targets: originalNumber,
-        innerHTML: [originalNumber.textContent, number],
+        targets: [originalNumber, resultNumber],
+        innerHTML: [0, number],
         round: 1,
         duration: 1500,
         easing: 'easeOutExpo'
@@ -64,12 +69,13 @@ function calcularDobro() {
 
     anime({
         targets: resultNumber,
-        innerHTML: [resultNumber.textContent, dobro],
+        innerHTML: [0, dobro],
         round: 1,
         duration: 1500,
         easing: 'easeOutExpo'
     });
 
+    // Efeitos visuais
     createMatrixEffect();
     input.value = '';
     input.focus();
@@ -122,9 +128,9 @@ function createMatrixEffect() {
         
         setTimeout(() => digit.remove(), 2000);
     }
-}
 
-function initializeAnimations() {
+    function initializeAnimations() {
+    // Anima elementos sequencialmente
     anime({
         targets: '.holographic-header',
         opacity: [0, 1],
@@ -152,3 +158,15 @@ function initializeAnimations() {
         easing: 'easeOutBack'
     });
 }
+
+// Modifique o DOMContentLoaded para:
+document.addEventListener('DOMContentLoaded', () => {
+    document.fonts.ready.then(() => {
+        const container = document.querySelector('.cyber-container');
+        container.style.visibility = 'visible'; // Adicione esta linha
+        container.classList.add('loaded');
+        initializeAnimations();
+        setupEventListeners();
+        createFloatingParticles();
+    });
+});
