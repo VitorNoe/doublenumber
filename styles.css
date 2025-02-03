@@ -12,6 +12,10 @@ body {
     background: #000;
     font-family: 'Orbitron', sans-serif;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
 }
 
 .nebula-background {
@@ -24,6 +28,7 @@ body {
         #1a1a4a 60%, 
         #2a2a6e 100%);
     animation: nebula-pulse 20s infinite alternate;
+    z-index: -2;
 }
 
 .cyber-container {
@@ -37,6 +42,14 @@ body {
                 inset 0 0 20px var(--hologram-1);
     backdrop-filter: blur(10px);
     transform: perspective(1000px) rotateX(5deg);
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+    transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.cyber-container.loaded {
+    opacity: 1;
+    transform: translateY(0) scale(1) perspective(1000px) rotateX(5deg);
 }
 
 .holographic-header {
@@ -169,6 +182,33 @@ body {
 }
 
 /* Animações Complexas */
+@keyframes containerEntry {
+    0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95) rotateX(15deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotateX(5deg);
+    }
+}
+
+.input-wrapper {
+    transition: transform 0.3s ease;
+}
+
+.input-wrapper:hover {
+    transform: translateY(-3px);
+}
+
+.particle-overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+}
+
 @keyframes nebula-pulse {
     0% { filter: hue-rotate(0deg) brightness(100%); }
     50% { filter: hue-rotate(180deg) brightness(120%); }
