@@ -1,93 +1,127 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Configurar eventos
-    const input = document.getElementById('numberInput');
-    const button = document.getElementById('calculateButton');
+    const input = document.getElementById('cyberInput');
+    const button = document.getElementById('cyberButton');
+    const result = document.getElementById('cyberResult');
     
-    // Evento de Enter
+    // Eventos de entrada
     input.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') calcularDobro();
     });
 
-    // Evento de clique no botão
     button.addEventListener('click', calcularDobro);
+    
+    // Efeito de partículas
+    createFloatingParticles();
 });
 
 function calcularDobro() {
-    const input = document.getElementById('numberInput');
-    const resultContent = document.querySelector('.result-content');
-    const resultContainer = document.getElementById('result');
-    const button = document.getElementById('calculateButton');
-
-    // Resetar estados
-    resultContainer.classList.remove('show');
-    input.classList.remove('input-error');
-    button.classList.remove('button-error');
+    const input = document.getElementById('cyberInput');
+    const resultElement = document.getElementById('cyberResult');
+    const originalNumber = document.querySelector('.original-number');
+    const resultNumber = document.querySelector('.result-number');
 
     // Animação do botão
-    button.classList.add('button-press');
-    setTimeout(() => button.classList.remove('button-press'), 200);
+    anime({
+        targets: '#cyberButton',
+        scale: [1, 0.95, 1],
+        duration: 300,
+        easing: 'easeInOutQuad'
+    });
 
-    // Converter e validar número
+    // Processar valor
     const value = input.value.replace(/,/g, '.');
     const number = parseFloat(value);
 
+    // Validação
     if (isNaN(number)) {
-        resultContent.textContent = "⚠️ Digite um número válido!";
-        resultContainer.classList.add('show');
-        input.classList.add('input-error');
-        button.classList.add('button-error');
+        showErrorAnimation();
         return;
     }
 
-    // Calcular e mostrar resultado
+    // Cálculo
     const dobro = number * 2;
-    resultContent.innerHTML = `
-        <div class="calculation-flow">
-            <span class="number-box animate__animated animate__bounceIn">${number}</span>
-            <span class="operator animate__animated animate__fadeIn">×</span>
-            <span class="number-box animate__animated animate__bounceIn">2</span>
-            <span class="operator animate__animated animate__fadeIn">=</span>
-            <span class="number-box result animate__animated animate__rubberBand">${dobro}</span>
-        </div>
-    `;
+    
+    // Animação do resultado
+    anime({
+        targets: resultElement,
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 800,
+        easing: 'easeOutElastic(1, .5)',
+        begin: () => {
+            resultElement.style.display = 'block';
+        }
+    });
 
-    // Ativar animações
-    resultContainer.classList.add('show');
-    createRippleEffect();
-    createConfetti();
+    // Animação dos números
+    anime({
+        targets: [originalNumber, resultNumber],
+        innerHTML: [0, number],
+        round: 1,
+        duration: 1500,
+        easing: 'easeOutExpo'
+    });
 
-    // Resetar campo
+    anime({
+        targets: resultNumber,
+        innerHTML: [0, dobro],
+        round: 1,
+        duration: 1500,
+        easing: 'easeOutExpo'
+    });
+
+    // Efeitos visuais
+    createMatrixEffect();
     input.value = '';
     input.focus();
 }
 
-function createConfetti() {
-    const colors = ['#4CAF50', '#6C5CE7', '#FFD700', '#FF4081'];
-    const container = document.querySelector('.background-effects');
-    
-    // Limpar confetti antigo
-    container.querySelectorAll('.confetti').forEach(c => c.remove());
+function showErrorAnimation() {
+    anime({
+        targets: '#cyberInput',
+        translateX: [-10, 10, -10, 10, 0],
+        backgroundColor: ['rgba(0,0,0,0.7)', '#ff000030', 'rgba(0,0,0,0.7)'],
+        duration: 800,
+        easing: 'easeInOutQuad'
+    });
+}
 
-    for(let i = 0; i < 20; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        confetti.style.cssText = `
+function createFloatingParticles() {
+    const particles = 50;
+    const overlay = document.querySelector('.particle-overlay');
+
+    for(let i = 0; i < particles; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'cyber-particle';
+        particle.style.cssText = `
             left: ${Math.random() * 100}%;
-            animation-delay: ${Math.random() * 0.5}s;
-            background: ${colors[Math.floor(Math.random() * colors.length)]};
-            width: ${Math.random() * 8 + 6}px;
-            height: ${Math.random() * 8 + 6}px;
+            top: ${Math.random() * 100}%;
+            width: ${Math.random() * 6 + 2}px;
+            height: ${Math.random() * 6 + 2}px;
+            background: ${Math.random() > 0.5 ? 'var(--neon-blue)' : 'var(--cyber-purple)'};
+            animation-duration: ${Math.random() * 5 + 5}s;
         `;
-        container.appendChild(confetti);
-        
-        setTimeout(() => confetti.remove(), 3000);
+        overlay.appendChild(particle);
     }
 }
 
-function createRippleEffect() {
-    const button = document.getElementById('calculateButton');
-    const ripple = document.createElement('div');
-    ripple.className = 'ripple-effect';
-    button.appendChild(ripple);
-    setTimeout(() => ripple.remove(), 600);
+function createMatrixEffect() {
+    const characters = '01';
+    const container = document.querySelector('.cyber-container');
+    
+    for(let i = 0; i < 30; i++) {
+        const digit = document.createElement('div');
+        digit.className = 'matrix-digit';
+        digit.textContent = characters.charAt(Math.floor(Math.random() * characters.length));
+        digit.style.cssText = `
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            color: ${Math.random() > 0.5 ? 'var(--matrix-green)' : 'var(--neon-blue)'};
+            animation: matrixFall ${Math.random() * 3 + 2}s linear;
+        `;
+        container.appendChild(digit);
+        
+        setTimeout(() => digit.remove(), 2000);
+    }
 }
