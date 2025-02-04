@@ -1,29 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Espera carregar fontes e recursos
-    document.fonts.ready.then(() => {
-        // Ativa animação de entrada
-        const container = document.querySelector('.cyber-container');
-        container.classList.remove('pre-load');
-        container.classList.add('loaded');
-
-        // Configura eventos após animação inicial
-        setTimeout(() => {
-            setupEventListeners();
-            createFloatingParticles();
-        }, 1000);
-    });
-});
-
-function setupEventListeners() {
+    // Configurar eventos
     const input = document.getElementById('cyberInput');
     const button = document.getElementById('cyberButton');
+    const result = document.getElementById('cyberResult');
     
+    // Eventos de entrada
     input.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') calcularDobro();
     });
 
     button.addEventListener('click', calcularDobro);
-}
+    
+    // Efeito de partículas
+    createFloatingParticles();
+});
+
+function calcularDobro() {
+    const input = document.getElementById('cyberInput');
+    const resultElement = document.getElementById('cyberResult');
+    const originalNumber = document.querySelector('.original-number');
+    const resultNumber = document.querySelector('.result-number');
 
     // Animação do botão
     anime({
@@ -128,45 +124,4 @@ function createMatrixEffect() {
         
         setTimeout(() => digit.remove(), 2000);
     }
-
-    function initializeAnimations() {
-    // Anima elementos sequencialmente
-    anime({
-        targets: '.holographic-header',
-        opacity: [0, 1],
-        translateY: [-30, 0],
-        delay: 300,
-        duration: 800,
-        easing: 'easeOutExpo'
-    });
-
-    anime({
-        targets: '.cyber-input-group',
-        opacity: [0, 1],
-        translateX: [-50, 0],
-        delay: 500,
-        duration: 600,
-        easing: 'easeOutQuad'
-    });
-
-    anime({
-        targets: '#cyberButton',
-        opacity: [0, 1],
-        scale: [0.8, 1],
-        delay: 700,
-        duration: 600,
-        easing: 'easeOutBack'
-    });
 }
-
-// Modifique o DOMContentLoaded para:
-document.addEventListener('DOMContentLoaded', () => {
-    document.fonts.ready.then(() => {
-        const container = document.querySelector('.cyber-container');
-        container.style.visibility = 'visible'; // Adicione esta linha
-        container.classList.add('loaded');
-        initializeAnimations();
-        setupEventListeners();
-        createFloatingParticles();
-    });
-});
